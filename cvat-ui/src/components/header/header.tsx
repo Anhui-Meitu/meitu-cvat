@@ -44,6 +44,7 @@ import GlobalHotKeys, { KeyMap } from 'utils/mousetrap-react';
 import { ShortcutScope } from 'utils/enums';
 import { subKeyMap } from 'utils/component-subkeymap';
 import SettingsModal from './settings-modal/settings-modal';
+import OrganizationsSearch from './organizations-search';
 
 interface StateToProps {
     user: any;
@@ -519,6 +520,7 @@ function HeaderComponent(props: Props): JSX.Element {
                         }}
                     />
                 </CVATTooltip>
+                <SwitchLocaleWithToolTip />
                 <Dropdown
                     trigger={['click']}
                     destroyPopupOnHide
