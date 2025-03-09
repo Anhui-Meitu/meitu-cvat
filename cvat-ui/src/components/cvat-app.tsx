@@ -14,6 +14,7 @@ import Spin from 'antd/lib/spin';
 import { DisconnectOutlined } from '@ant-design/icons';
 import Space from 'antd/lib/space';
 import Text from 'antd/lib/typography/Text';
+import { withTranslation, WithTranslation } from 'react-i18next';
 
 import LogoutComponent from 'components/logout-component';
 import LoginPageContainer from 'containers/login-page/login-page';
@@ -134,8 +135,11 @@ interface CVATAppState {
     healthIinitialized: boolean;
     backendIsHealthy: boolean;
 }
-class CVATApplication extends React.PureComponent<CVATAppProps & RouteComponentProps, CVATAppState> {
-    constructor(props: CVATAppProps & RouteComponentProps) {
+class CVATApplication extends React.PureComponent<
+CVATAppProps & RouteComponentProps & WithTranslation,
+CVATAppState
+> {
+    constructor(props: CVATAppProps & RouteComponentProps & WithTranslation) {
         super(props);
 
         this.state = {
@@ -490,6 +494,8 @@ class CVATApplication extends React.PureComponent<CVATAppProps & RouteComponentP
             isModelPluginActive,
             isPasswordResetEnabled,
             isRegistrationEnabled,
+            t,
+            tReady,
         } = this.props;
 
         const { healthIinitialized, backendIsHealthy } = this.state;
@@ -503,7 +509,8 @@ class CVATApplication extends React.PureComponent<CVATAppProps & RouteComponentP
                 pluginsInitialized &&
                 aboutInitialized &&
                 organizationInitialized &&
-                (!isModelPluginActive || modelsInitialized)
+                (!isModelPluginActive || modelsInitialized) &&
+                tReady
             )
         );
 
@@ -645,9 +652,9 @@ class CVATApplication extends React.PureComponent<CVATAppProps & RouteComponentP
         }
 
         return (
-            <Spin size='large' fullscreen className='cvat-spinner' tip='Connecting...' />
+            <Spin size='large' fullscreen className='cvat-spinner' tip={`${t('Connecting', 'Connecting')}...`} />
         );
     }
 }
 
-export default withRouter(CVATApplication);
+export default withTranslation()(withRouter(CVATApplication));
