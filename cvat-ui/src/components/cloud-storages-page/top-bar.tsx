@@ -17,6 +17,7 @@ import {
     defaultVisibility,
     ResourceSelectionInfo,
 } from 'components/resource-sorting-filtering';
+import { useTranslation } from 'react-i18next';
 
 import dimensions from 'utils/dimensions';
 
@@ -44,6 +45,7 @@ export default function StoragesTopBar(props: Readonly<Props>): JSX.Element {
     } = props;
     const history = useHistory();
     const [visibility, setVisibility] = useState(defaultVisibility);
+    const { i18n } = useTranslation();
 
     return (
         <Row justify='center' align='middle' className='cvat-cloud-storages-list-top-bar'>
@@ -69,6 +71,7 @@ export default function StoragesTopBar(props: Readonly<Props>): JSX.Element {
                             )}
                             defaultFields={query.sort?.split(',') || ['-ID']}
                             sortingFields={['ID', 'Provider type', 'Updated date', 'Display name', 'Resource', 'Credentials type', 'Owner', 'Description']}
+                            sortingLabelMap={i18n.getResource(i18n.language, 'base', 'cloudStorage.fields')}
                             onApplySorting={(sorting: string | null) => {
                                 onApplySorting(sorting);
                             }}
