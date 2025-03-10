@@ -45,7 +45,7 @@ export default function StoragesTopBar(props: Readonly<Props>): JSX.Element {
     } = props;
     const history = useHistory();
     const [visibility, setVisibility] = useState(defaultVisibility);
-    const { i18n } = useTranslation();
+    const { t, i18n } = useTranslation();
 
     return (
         <Row justify='center' align='middle' className='cvat-cloud-storages-list-top-bar'>
@@ -59,7 +59,7 @@ export default function StoragesTopBar(props: Readonly<Props>): JSX.Element {
                             }}
                             defaultValue={query.search ?? ''}
                             className='cvat-cloudstorages-page-tasks-search-bar'
-                            placeholder='Search ...'
+                            placeholder={t('search.Search...')}
                         />
                         <ResourceSelectionInfo selectedCount={selectedCount} onSelectAll={onSelectAll} />
                     </div>

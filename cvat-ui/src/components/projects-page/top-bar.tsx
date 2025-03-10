@@ -49,7 +49,7 @@ function TopBarComponent(props: Readonly<Props>): JSX.Element {
     } = props;
     const [visibility, setVisibility] = useState(defaultVisibility);
     const prevImporting = usePrevious(importing);
-    const { i18n } = useTranslation();
+    const { t, i18n } = useTranslation('base');
 
     useEffect(() => {
         if (prevImporting && !importing) {
@@ -70,7 +70,7 @@ function TopBarComponent(props: Readonly<Props>): JSX.Element {
                             }}
                             defaultValue={query.search ?? ''}
                             className='cvat-projects-page-search-bar'
-                            placeholder='Search ...'
+                            placeholder={t('search.Search...')}
                         />
                         <ResourceSelectionInfo selectedCount={selectedCount} onSelectAll={onSelectAll} />
                     </div>
@@ -117,7 +117,7 @@ function TopBarComponent(props: Readonly<Props>): JSX.Element {
                                     onClick={(): void => history.push('/projects/create')}
                                     icon={<PlusOutlined />}
                                 >
-                                    Create a new project
+                                    {t('search.create_new', 'Create a new project', { item: t('Project') })}
                                 </Button>
                                 <Button
                                     className='cvat-import-project-button'
@@ -126,7 +126,7 @@ function TopBarComponent(props: Readonly<Props>): JSX.Element {
                                     icon={importing ? <LoadingOutlined /> : <UploadOutlined />}
                                     onClick={() => dispatch(importActions.openImportBackupModal('project'))}
                                 >
-                                    Create from backup
+                                    {t('search.create_from_backup', 'Create from backup')}
                                 </Button>
                             </div>
                         )}
