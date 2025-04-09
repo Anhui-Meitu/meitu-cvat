@@ -24,10 +24,13 @@ RUN apt-get update && \
         cargo \
     && rm -rf /var/lib/apt/lists/*
 
+RUN git config --global http.proxy "192.16.16.182:7890";
+RUN git config --global https.proxy "192.16.16.182:7890";
+
 ARG PIP_VERSION
 ENV PIP_DISABLE_PIP_VERSION_CHECK=1
 RUN --mount=type=cache,target=/root/.cache/pip/http \
-    python3 -m pip install -U pip==${PIP_VERSION}
+    python3 -m pip install -i https://pypi.tuna.tsinghua.edu.cn/simple  -U pip==${PIP_VERSION}
 
 # We build OpenH264, FFmpeg and PyAV in a separate build stage,
 # because this way Docker can do it in parallel to all the other packages.
@@ -60,6 +63,9 @@ COPY utils/dataset_manifest/requirements.txt /tmp/utils/dataset_manifest/require
 # and then remove everything else.
 RUN grep -q '^av==' /tmp/utils/dataset_manifest/requirements.txt
 RUN sed -i '/^av==/!d' /tmp/utils/dataset_manifest/requirements.txt
+
+# Work around https://github.com/PyAV-Org/PyAV/issues/1140
+RUN pip install -i https://pypi.tuna.tsinghua.edu.cn/simple setuptools wheel 'cython<3'
 
 RUN --mount=type=cache,target=/root/.cache/pip/http-v2 \
     python3 -m pip wheel --no-binary=av \
@@ -160,13 +166,15 @@ RUN if [ "$CLAM_AV" = "yes" ]; then \
 # Install wheels from the build image
 RUN python3 -m venv /opt/venv
 ENV PATH="/opt/venv/bin:${PATH}"
-# Prevent security scanners from finding vulnerabilities in whatever version of setuptools
-# is included in Ubuntu by default.
-RUN python -m pip uninstall -y setuptools
+ENV PIP_INDEX_URL=https://mirrors.aliyun.com/pypi/simple/
+
+# setuptools should be uninstalled after updating google-cloud-storage
+# https://github.com/googleapis/python-storage/issues/740
+RUN python -m pip install -i https://pypi.tuna.tsinghua.edu.cn/simple --upgrade setuptools
 ARG PIP_VERSION
 ARG PIP_DISABLE_PIP_VERSION_CHECK=1
 
-RUN python -m pip install -U pip==${PIP_VERSION}
+RUN python -m pip install -i https://pypi.tuna.tsinghua.edu.cn/simple -U pip==${PIP_VERSION}
 RUN --mount=type=bind,from=build-image,source=/tmp/wheelhouse,target=/mnt/wheelhouse \
     --mount=type=bind,from=build-image-av,source=/tmp/wheelhouse,target=/mnt/wheelhouse-av \
     python -m pip install --no-index /mnt/wheelhouse/*.whl /mnt/wheelhouse-av/*.whl
@@ -178,7 +186,7 @@ COPY --from=build-image-av /opt/ffmpeg/lib /usr/lib
 # This library allows remote python debugging with VS Code
 ARG CVAT_DEBUG_ENABLED
 RUN if [ "${CVAT_DEBUG_ENABLED}" = 'yes' ]; then \
-        python3 -m pip install --no-cache-dir debugpy; \
+        python3 -m pip install -i https://pypi.tuna.tsinghua.edu.cn/simple  --no-cache-dir debugpy; \
     fi
 
 # Removing pip due to security reasons. See: https://scout.docker.com/vulnerabilities/id/CVE-2018-20225
