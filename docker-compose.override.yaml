@@ -19,5 +19,5 @@ volumes:
   cvat_share:
     driver_opts:
       type: none
-      device: /mnt/share
+      device: /media/meitu001/Data/share
       o: bind
