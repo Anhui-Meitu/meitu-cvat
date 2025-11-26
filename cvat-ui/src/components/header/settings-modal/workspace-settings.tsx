@@ -249,7 +249,7 @@ function WorkspaceSettingsComponent(props: Props): JSX.Element {
                 </Col>
                 <Col span={24}>
                     <Text type='secondary'>
-                        Enable smoother version of zooming, compatible with a trackpad and pinch gestures
+                        {tSettingsWorkspace('auto-borders-tips', 'Enable automatic bordering for polygons and polylines during drawing/editing')}
                     </Text>
                 </Col>
             </Row>

@@ -12,6 +12,8 @@ import { Link } from 'react-router-dom';
 import { BackArrowIcon } from 'icons';
 import { useTranslation } from 'react-i18next';
 
+import patterns from 'utils/validation-patterns';
+
 import { UserAgreement } from 'reducers';
 import { Row, Col } from 'antd/lib/grid';
 import CVATSigningInput, { CVATInputType } from 'components/signing-common/cvat-signing-input';

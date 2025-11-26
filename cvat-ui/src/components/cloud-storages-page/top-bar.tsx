@@ -18,6 +18,7 @@ import {
     ResourceSelectionInfo,
 } from 'components/resource-sorting-filtering';
 import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
 import dimensions from 'utils/dimensions';
 

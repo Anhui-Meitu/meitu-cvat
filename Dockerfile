@@ -90,6 +90,8 @@ RUN --mount=type=cache,target=/root/.cache/pip/http-v2 \
 
 FROM golang:1.25.3 AS build-smokescreen
 
+# RUN git config --global url."https://hub.fastgit.org/".insteadOf "https://github.com/"
+
 RUN git clone --filter=blob:none --no-checkout https://github.com/stripe/smokescreen.git
 RUN cd smokescreen && git checkout eb1ac09 && go build -o /tmp/smokescreen
 

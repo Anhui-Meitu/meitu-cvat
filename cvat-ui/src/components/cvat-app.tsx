@@ -15,6 +15,7 @@ import { DisconnectOutlined } from '@ant-design/icons';
 import Space from 'antd/lib/space';
 import Text from 'antd/lib/typography/Text';
 import { withTranslation, WithTranslation, Trans } from 'react-i18next';
+import { withTranslation, WithTranslation, Trans } from 'react-i18next';
 
 import LogoutComponent from 'components/logout-component';
 import LoginPageContainer from 'containers/login-page/login-page';
@@ -275,9 +276,14 @@ CVATAppState
                                         i18nKey='modal.unsupported-platform.content.0'
                                         values={{ name, version, engine }}
                                     >
+                                        <Trans
+                                        i18nKey='modal.unsupported-platform.content.0'
+                                        values={{ name, version, engine }}
+                                    >
                                         {`你正在使用的浏览器是基于${engine}的 ${name} ${version}.` +
                                         ' CVAT仅在最新版本的Firefox和谷歌Chrome浏览器上测试过.' +
                                         ' 我们推荐使用Chrome (或其他基于Chromium的浏览器)'}
+                                    </Trans>
                                     </Trans>
                                 </Text>
                             </Col>

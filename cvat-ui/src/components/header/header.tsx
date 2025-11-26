@@ -47,6 +47,7 @@ import { subKeyMap } from 'utils/component-subkeymap';
 import { registerComponentShortcutsWithAutoLocalePatch } from 'i18n';
 import SettingsModal from './settings-modal/settings-modal';
 import OrganizationsSearch from './organizations-search';
+import SwitchLocaleWithToolTip from '../switch-locale-component';
 
 interface StateToProps {
     user: any;

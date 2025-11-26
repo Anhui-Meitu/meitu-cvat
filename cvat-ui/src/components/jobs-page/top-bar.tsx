@@ -43,18 +43,15 @@ function TopBarComponent(props: Readonly<Props>): JSX.Element {
         <Row className='cvat-jobs-page-top-bar' justify='center' align='middle'>
             <Col {...dimensions}>
                 <div>
-                    <div>
-                        <Input.Search
-                            enterButton
-                            onSearch={(phrase: string) => {
-                                onApplySearch(phrase);
-                            }}
-                            defaultValue={query.search ?? ''}
-                            className='cvat-jobs-page-search-bar'
-                            placeholder={t('search.Search...')}
-                        />
-                        <ResourceSelectionInfo selectedCount={selectedCount} onSelectAll={onSelectAll} />
-                    </div>
+                    <Input.Search
+                        enterButton
+                        onSearch={(phrase: string) => {
+                            onApplySearch(phrase);
+                        }}
+                        defaultValue={query.search || ''}
+                        className='cvat-jobs-page-search-bar'
+                        placeholder={t('search.Search...')}
+                    />
                     <div>
                         <SortingComponent
                             visible={visibility.sorting}
