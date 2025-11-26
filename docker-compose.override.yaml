@@ -1,20 +1,7 @@
 services:
   cvat_server:
     volumes:
-      - cvat_share:/home/django/share:ro
-  cvat_worker_import:
-    volumes:
-      - cvat_share:/home/django/share:ro
-  cvat_worker_export:
-    volumes:
-      - cvat_share:/home/django/share:ro
-  cvat_worker_annotation:
-    volumes:
-      - cvat_share:/home/django/share:ro
-  cvat_worker_chunks:
-    volumes:
-      - cvat_share:/home/django/share:ro
-
+      - cvat_share:/home/django/share:ro # 'ro' means read-only, which is typical for source data
 volumes:
   cvat_share:
     driver_opts:
