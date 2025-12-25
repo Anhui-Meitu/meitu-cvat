@@ -1,1 +1,1 @@
-docker compose -f docker-compose.dev.yml -f docker-compose.override.yaml -f docker-compose.yml up -d --build
+docker compose -f docker-compose.dev.yml -f docker-compose.override.yml -f docker-compose.yml up -d --build

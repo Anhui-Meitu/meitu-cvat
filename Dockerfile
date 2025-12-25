@@ -24,8 +24,12 @@ RUN apt-get update && \
         cargo \
     && rm -rf /var/lib/apt/lists/*
 
-RUN git config --global http.proxy "192.16.16.182:7899";
-RUN git config --global https.proxy "192.16.16.182:7899";
+RUN git config --global http.proxy "192.16.16.182:7890";
+RUN git config --global https.proxy "192.16.16.182:7890";
+
+ENV http_proxy=http://192.16.16.182:7890 \
+    https_proxy=http://192.16.16.182:7890 \
+    no_proxy=localhost,127.0.0.1,::1
 
 ARG PIP_VERSION
 ENV PIP_DISABLE_PIP_VERSION_CHECK=1
@@ -44,12 +48,12 @@ ENV FFMPEG_VERSION=8.0 \
     OPENH264_VERSION=2.6.0
 
 WORKDIR /tmp/openh264
-RUN curl -sL https://github.com/cisco/openh264/archive/v${OPENH264_VERSION}.tar.gz --output - | \
+RUN curl -x 192.16.16.182:7890 -sL https://github.com/cisco/openh264/archive/v${OPENH264_VERSION}.tar.gz --output - | \
     tar -zx --strip-components=1 && \
     make -j5 && make install-shared PREFIX=${PREFIX} && make clean
 
 WORKDIR /tmp/ffmpeg
-RUN curl -sL https://ffmpeg.org/releases/ffmpeg-${FFMPEG_VERSION}.tar.gz --output - | \
+RUN curl -x 192.16.16.182:7890 -sL https://ffmpeg.org/releases/ffmpeg-${FFMPEG_VERSION}.tar.gz --output - | \
     tar -zx --strip-components=1 && \
     ./configure --disable-nonfree --disable-gpl --enable-libopenh264 \
         --enable-shared --disable-static --disable-doc --disable-programs --prefix="${PREFIX}" && \
